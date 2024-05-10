@@ -163,4 +163,31 @@ public abstract class IncomeTaxManager {
 			objectClient.createObject(session, "payrunline", data, false);			
 		}
 	}
+	
+	protected void prepareIntegrationResult(Session session, Payrun payrun, String msgUid) throws RedbackException {
+		DataMap filter = new DataMap("object", "payrun", "objectuid", payrun.id, "id", msgUid, "name", "ATO");
+		DataMap data = new DataMap("status", "waiting");
+		List<RedbackObjectRemote> list = objectClient.listObjects(session, "intresult", filter);
+		if(list.size() > 0) {
+			RedbackObjectRemote result = list.get(0);
+			result.set(data);
+		} else {
+			DataMap fullData = filter.merge(data);
+			objectClient.createObject(session, "intresult", fullData, false);
+		}
+	}
+	
+	protected void updateIntegrationResult(Session session, Payrun payrun, String msgUid, boolean success, String details) throws RedbackException {
+		String status = success ? "success" : "error";
+		DataMap filter = new DataMap("object", "payrun", "objectuid", payrun.id, "id", msgUid, "name", "ATO");
+		DataMap data = new DataMap("status", status, "completed", new Date(), "details", details);
+		List<RedbackObjectRemote> list = objectClient.listObjects(session, "intresult", filter);
+		if(list.size() > 0) {
+			RedbackObjectRemote result = list.get(0);
+			result.set(data);
+		} else {
+			DataMap fullData = filter.merge(data);
+			objectClient.createObject(session, "intresult", fullData, false);
+		}
+	}
 }

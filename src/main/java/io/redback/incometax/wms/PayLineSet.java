@@ -74,4 +74,12 @@ public class PayLineSet extends ArrayList<PayLine> {
 		return ret;
 	}
 	
+	public List<String> uniquePersonIds() {
+		List<String> ret = new ArrayList<String>();
+		for(PayLine line: this) {
+			String personId = line.person;
+			if(!ret.contains(personId)) ret.add(personId);
+		}
+		return ret;
+	}
 }

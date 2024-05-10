@@ -16,7 +16,7 @@ public class Person {
 	public String org;
 	public String employeenum;
 	public String taxid;
-	public Address address;
+	public String address;
 	public double paybase;
 	public Map<String, Object> attributes;
 	
@@ -29,7 +29,7 @@ public class Person {
 		org = p.getString("org");
 		employeenum = p.getString("employeenum");
 		taxid = p.getString("taxid");
-		address = new Address(p.getString("homeaddress"));
+		address = p.getString("homeaddress");
 		paybase = p.getNumber("paybase").doubleValue();
 		attributes = new HashMap<String, Object>();
 		if(a != null) {
