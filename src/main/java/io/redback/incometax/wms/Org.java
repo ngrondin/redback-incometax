@@ -9,6 +9,7 @@ public class Org {
 	public String address;
 	public String taxId;
 	public String businessId;
+	public String branchCode;
 	public String contactName;
 	public String contactEmail;
 	public String contactPhone;
@@ -19,6 +20,7 @@ public class Org {
 		address = taxorg.getString("address");
 		taxId = taxorg.getString("taxid");
 		businessId = taxorg.getString("businessid");
+		branchCode = taxorg.getString("branch");
 		if(person != null) {
 			contactName = person.getString("fullname");
 			contactEmail = person.getString("email");
