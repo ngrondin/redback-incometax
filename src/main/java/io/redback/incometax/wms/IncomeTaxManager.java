@@ -89,6 +89,15 @@ public abstract class IncomeTaxManager {
 		return payrun;
 	}
 	
+	protected PayrunIntegrationSet getPayrunIntegrations(Session session, String payrunId) throws RedbackException {
+		RedbackObjectRemoteList intResultList = new RedbackObjectRemoteList(objectClient.listAllObjects(session, "intresult", new DataMap("name", "ATO", "object", "payrun", "objectuid", payrunId), null, false));
+		PayrunIntegrationSet ret = new PayrunIntegrationSet();
+		for(RedbackObjectRemote payrunIntegration: intResultList) {
+			ret.add(new PayrunIntegration(payrunIntegration));
+		}
+		return ret;
+	}
+	
 	protected PersonSet getPersons(Session session, DataList personIds) throws RedbackException {
 		RedbackObjectRemoteList persons = new RedbackObjectRemoteList(objectClient.listAllObjects(session, "person", new DataMap("uid", new DataMap("$in", personIds)), null, false));
 		RedbackObjectRemoteList personAttributes = new RedbackObjectRemoteList(objectClient.listAllObjects(session, "persontaxattribute", new DataMap("person", new DataMap("$in", personIds)), null, false));

@@ -1,12 +1,13 @@
 package io.redback.incometax.wms;
 
+import io.firebus.data.DataMap;
 import io.redback.client.RedbackObjectRemote;
 import io.redback.exceptions.RedbackException;
 
 public class Org {
 	public String id;
 	public String name;
-	public String address;
+	public Address address;
 	public String taxId;
 	public String businessId;
 	public String branchCode;
@@ -17,7 +18,8 @@ public class Org {
 	public Org(RedbackObjectRemote taxorg, RedbackObjectRemote person) throws RedbackException {
 		id = taxorg.getString("org");
 		name = taxorg.getString("name");
-		address = taxorg.getString("address");
+		DataMap addressParts = (DataMap)taxorg.getObject("addressparts");
+		address = new Address(addressParts);
 		taxId = taxorg.getString("taxid");
 		businessId = taxorg.getString("businessid");
 		branchCode = taxorg.getString("branch");

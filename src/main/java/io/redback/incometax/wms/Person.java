@@ -3,6 +3,7 @@ package io.redback.incometax.wms;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.firebus.data.DataMap;
 import io.redback.client.RedbackObjectRemote;
 import io.redback.client.RedbackObjectRemoteList;
 import io.redback.exceptions.RedbackException;
@@ -16,7 +17,7 @@ public class Person {
 	public String org;
 	public String employeenum;
 	public String taxid;
-	public String address;
+	public Address address;
 	public double paybase;
 	public Map<String, Object> attributes;
 	
@@ -29,7 +30,8 @@ public class Person {
 		org = p.getString("org");
 		employeenum = p.getString("employeenum");
 		taxid = p.getString("taxid");
-		address = p.getString("homeaddress");
+		DataMap addressParts = (DataMap)p.getObject("homeaddressparts");
+		address = new Address(addressParts);
 		paybase = p.getNumber("paybase").doubleValue();
 		attributes = new HashMap<String, Object>();
 		if(a != null) {

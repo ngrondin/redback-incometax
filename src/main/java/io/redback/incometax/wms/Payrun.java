@@ -11,6 +11,7 @@ public class Payrun {
 	public Date start;
 	public Date end;
 	public String timezone;
+	public String overrides;
 	
 	public Payrun(RedbackObjectRemote pr) throws RedbackException {
 		id = pr.getUid();
@@ -18,5 +19,6 @@ public class Payrun {
 		start = pr.getDate("startdate");
 		end = pr.getDate("enddate");
 		timezone = pr.getString("timezone");
+		overrides = pr.getString("overrides");
 	}
 }
